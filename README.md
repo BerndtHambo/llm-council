@@ -2,12 +2,6 @@
 
 ![llmcouncil](header.jpg)
 
-> **Note:** This is a fork of the original [LLM Council](https://github.com/karpathy/llm-council) repository with the following enhancements:
-> - **Ollama support**: Run models locally using [Ollama](https://ollama.com/) without API keys. Choose between OpenRouter and Ollama by setting the `ROUTER_TYPE` environment variable in your `.env` file (openrouter or ollama).
-> - **Environment-based configuration**: All settings (router type, API keys, models, timeouts) can be configured via `.env` file. Copy `.env.example` to `.env` and customize as needed. Response timeout settings (`DEFAULT_TIMEOUT`, `TITLE_GENERATION_TIMEOUT`) can be adjusted for slower models or networks.
-> - **Enhanced frontend design**: Real-time execution timers showing start time, end time, and elapsed duration for each stage in the top-right corner. Timestamps displayed in 24-hour format (HH:mm:ss.S) with live updates during execution.
-> - **Conversation management**: Delete individual conversations or all conversations at once with smooth slide-out animations for better user experience. Hover over conversation items to reveal delete buttons.
-
 The idea of this repo is that instead of asking a question to your favorite LLM provider (e.g. OpenAI GPT 5.1, Google Gemini 3.0 Pro, Anthropic Claude Sonnet 4.5, xAI Grok 4, eg.c), you can group them into your "LLM Council". This repo is a simple, local web app that essentially looks like ChatGPT except it uses OpenRouter to send your query to multiple LLMs, it then asks them to review and rank each other's work, and finally a Chairman LLM produces the final response.
 
 In a bit more detail, here is what happens when you submit a query:
@@ -48,6 +42,8 @@ OPENROUTER_API_KEY=sk-or-v1-...
 
 Get your API key at [openrouter.ai](https://openrouter.ai/). Make sure to purchase the credits you need, or sign up for automatic top up.
 
+Alternatively, you can use Ollama for local models by setting `ROUTER_TYPE=ollama` in your `.env` file. Make sure you have [Ollama](https://ollama.ai/) installed and running locally.
+
 ### 3. Configure Models (Optional)
 
 Edit `backend/config.py` to customize the council:
@@ -62,6 +58,22 @@ COUNCIL_MODELS = [
 
 CHAIRMAN_MODEL = "google/gemini-3-pro-preview"
 ```
+
+Or configure models via `.env` file using comma-separated values:
+
+**For OpenRouter:**
+```bash
+COUNCIL_MODELS=openai/gpt-5.1,google/gemini-3-pro-preview,anthropic/claude-sonnet-4.5,x-ai/grok-4
+CHAIRMAN_MODEL=google/gemini-3-pro-preview
+```
+
+**For Ollama:**
+```bash
+COUNCIL_MODELS=deepseek-r1:latest,llama3.1:latest,qwen3:latest,gemma3:latest
+CHAIRMAN_MODEL=gemma3:latest
+```
+
+See `.env.example` for more configuration options.
 
 ## Running the Application
 
@@ -87,7 +99,7 @@ Then open http://localhost:5173 in your browser.
 
 ## Tech Stack
 
-- **Backend:** FastAPI (Python 3.10+), async httpx, OpenRouter API
+- **Backend:** FastAPI (Python 3.10+), async httpx, OpenRouter API or Ollama
 - **Frontend:** React + Vite, react-markdown for rendering
 - **Storage:** JSON files in `data/conversations/`
 - **Package Management:** uv for Python, npm for JavaScript
