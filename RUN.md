@@ -517,9 +517,3 @@ cd frontend && npm run dev                 # Start frontend (opens browser)
 **Platform:**
 - macOS, Linux, Windows (WSL2)
 - Docker (optional)
-
----
-
-That's it! You're ready to use LLM Council. 🎉
-
-For more details, see `FEATURES.md` and files in `contributions/` folder.
