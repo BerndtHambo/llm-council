@@ -78,8 +78,13 @@ See `.env.example` for more configuration options.
 ## Running the Application
 
 **Option 1: Use the start script**
+Linux/macOS
 ```bash
 ./start.sh
+```
+Windows
+```bat
+./start.bat
 ```
 
 **Option 2: Run manually**
